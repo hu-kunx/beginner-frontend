@@ -1,0 +1,198 @@
+@charset "utf-8";
+
+//导航栏
+.m-navbar {
+  display: flex;
+  align-items: center;
+  height: $navbar-height;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+
+  .container {
+    @include flow;
+    height: $navbar-container-height;
+    align-items: center;
+  }
+  //logo
+  .m-navbar-logo {
+    @include flow;
+    width: $row-m5;
+    a {
+      height: 50px;
+      background-size: cover;
+    }
+    a:nth-child(1) {
+      width: 50px;
+      background-color: $m-color;
+      background-image: url("../images/A6.png");
+    }
+    a:nth-child(2) {
+      width: $row-m5 - 50px;
+      border: 1px solid #eee;
+      background-image: url("../images/A6.png");
+    }
+  }
+  //导航内容
+  .m-navbar-nav {
+    @include flow;
+    li:hover .nav-menu {
+      height: $nav-menu-height;
+    }
+    a {
+      padding: 10px;
+      color: #444;
+      &:hover {
+        color: $m-color;
+      }
+    }
+  }
+  //搜索
+  .search {
+    position: relative;
+    @include flow;
+    margin-left: auto;
+    width: $search-width;
+    align-items: center;
+    height: 100%;
+    &:hover .parent {
+      border-color: #999;
+    }
+    &:hover .ico-search {
+      border-color: #999;
+    }
+    .search-label {
+      position: absolute;
+      z-index: 4;
+      right: 60px;
+      font-size: 12px;
+      a {
+        padding: 2px 4px;
+        color: #888;
+        background-color: #eee;
+        &:hover {
+          color: white;
+          background-color: $m-color;
+        }
+      }
+    }
+    //搜索 input
+    .search-input {
+      position: relative;
+      z-index: 3;
+      margin-left: 1px;
+      padding: 0 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+    //构建父级边框
+    .parent {
+      position: absolute;
+      z-index: 2;
+      border: 1px solid #ccc;
+      width: 100%;
+      height: 100%;
+    }
+    //ico 图片
+    .ico-search {
+      margin-left: auto;
+      width: $navbar-container-height;
+      height: 100%;
+      border-left: 1px solid #ccc;
+    }
+  }
+}
+//一些鼠标控制
+
+.search-input:focus~.search-label {
+  display: none;
+}
+.search-input:focus+.parent {
+  border-color: $m-color!important;
+}
+.search-input:focus~.ico-search {
+  border-color: $m-color!important;
+}
+.search-input:focus~.search-list {
+  display: block;
+}
+//搜索联想
+.search-list {
+  display: none;
+  position: absolute;
+  top: 49px;
+  z-index: $search-index;
+  width: 251px;
+  font-size: 13px;
+  color: #999;
+  border: 1px solid $m-color;
+  background-color: white;
+  li {
+    line-height: 30px;
+    a{
+      display: flex;
+      padding: 0 10px;
+      span {
+        margin-left: auto;
+      }
+      &:hover {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+}
+//导航的二级菜单
+.nav-menu {
+  position: fixed;
+  left: 0;
+  top: 135px;
+  z-index: 999999999;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  transition: height .4s;
+  .container {
+    padding: 30px 0;
+    height: 100%;
+    background-color: #eee;
+    li {
+      position: relative;
+      @include flow(column);
+      align-items: center;
+      width: $container-min-width / 6;
+      height: 100%;
+      &:not(:last-child):after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 8px;
+        width: 1px;
+        height: 105px;
+        background-color: #ccc;
+      }
+    }
+    li:last-child {
+      border-right: 0;
+    }
+
+    img {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+    }
+    span {
+      margin-top: 15px;
+    }
+    .com-price {
+      color: $m-color
+    }
+  }
+}
+
+
+
+
+
+
+
+
+

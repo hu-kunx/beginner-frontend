@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        #can {
+            display: block;
+            background-color: #fff;
+        }
+        #form {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 5;
+            box-sizing: border-box;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 200px;
+            border-left: 1px solid green;
+        }
+        .input {
+            margin: 0 auto;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: none;
+            border: 1px solid green;
+        }
+        .opt {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
+        .text {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #text {
+            padding-left: 10px;
+            font-weight: bold;
+            line-height: 30px;
+        }
+        #btn {
+            margin-top: 10px;
+            transition: all .2s;
+        }
+        #btn:active {
+            transform: scale(.98);
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+<form action="" id="form">
+    <section class="opt">
+        <label>
+            <span>密度</span>
+            <input id="density" type="number" value="8" step="1" min="1" max="20" required>
+        </label>
+        <label>
+            <span>粒子聚拢大小</span>
+            <input id="size" type="number" value="2" step="0.5" min="0.5" max="5" required>
+        </label>
+        <label>
+            <span>速度:</span>
+            <input id="speed" type="number" value="0.03" step="0.001" min="0.001" max="10.0" required>
+        </label>
+        <label>
+            <span>时间间隔:</span>
+            <input id="time" type="number" value="5000" step="1000" min="2000" max="15000" required>
+        </label>
+    </section>
+    <section class="text">
+        <label>
+            <input type="text" id="text" class="input" placeholder="name">
+        </label>
+        <label>
+            <input type="submit" id="btn" value="RUN" class="input">
+        </label>
+    </section>
+</form>
+<canvas id="can" width="100" height="100">
+    <span>不支持</span>
+</canvas>
+<script>
+    function gId(o) {
+        return document.getElementById(o);
+    }
+    var oCan = gId('can'),
+        ctx = oCan.getContext('2d'),
+        oText = gId('text'),
+        oBtn = gId('btn'),
+        oFile = gId('file'),
+        obtn = gId('btn2');
+    
+    !function particle() {
+
+        var density = 8, //密度
+            speed = 0.03, //速度
+            size = 2, //小球大小
+            derection = true, //动画转折点
+            lastDare = new Date().getTime(), //动画转折依赖
+            timer = null, //关闭动画
+            oImg = null,
+            arr = [],
+            timeData = 5000;
+
+        //初始化 canvas
+        function initCanvasWidth(obj,backgroundColor) {
+            var docEl = document.documentElement;
+            obj.width = docEl.clientWidth-200;
+            obj.height = docEl.clientHeight;
+            obj.style.display = "block";
+            if(backgroundColor) obj.style.backgroundColor = backgroundColor;
+        }
+
+        initCanvasWidth(oCan);
+
+        //写文字
+        function drawText(text,fontSize, color) {
+            fontSize = fontSize || "200px";
+            color = color || "green";
+            ctx.save();
+            ctx.font = fontSize+" Verdana bold";
+            ctx.fillStyle = color;
+            ctx.textAlign = "center";
+            ctx.fillText(text, oCan.width/2, oCan.height/2);
+        }
+
+        //监听事件
+        window.onresize = function (ev) {
+            initCanvasWidth(oCan);
+        };
+
+        //粒子类
+        function Dot(x,y) {
+
+            this.dx = x;                        //粒子聚合位置
+            this.dy = y;
+
+            this.tx = randomNum(oCan.width, 10); //粒子聚合后又散开的位置
+            this.ty = randomNum(oCan.height, 10);
+
+            this.tr = Math.random()>=.9?10+Math.random()*5:2+Math.random()*4;
+
+            this.x = randomNum(oCan.width, 10);  //初始位置
+            this.y = randomNum(oCan.width, 10);
+            this.color = randomColor();
+        }
+
+        Dot.prototype = {
+            //画像素
+            draw : function (r,color) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, r, 0, 360*Math.PI/180, true);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.restore();
+            },
+            //散开
+            moveRandom : function () {
+                this.x += (this.tx-this.x)*speed;
+                this.y += (this.ty-this.y)*speed;
+            },
+            //显字
+            moveName : function () {
+                this.x += (this.dx-this.x)*speed;
+                this.y += (this.dy-this.y)*speed;
+            }
+        };
+
+        //启动程序
+        function init(text) {
+            ctx.clearRect(0, 0, oCan.width, oCan.height);
+
+            arr.length = 0;
+
+            lastDare = new Date().getTime();
+
+            derection = true;
+
+            window.cancelAnimationFrame(timer);
+
+            drawText(text);
+
+            //图片像素
+            oImg = ctx.getImageData(0,0,oCan.width,oCan.height);
+
+            //像素有效数组
+            arr = getImgArray(oImg,density);
+
+            //动画
+            animation();
+        }
+
+        init('Hukun');
+
+        oBtn.onclick = function (ev) {
+
+            if(oText.value !== ''){
+
+                density =  Number(gId('density').value) || 8;
+                speed = Number(gId('speed').value) || 0.03;
+                size = Number(gId('size').value) || 2;
+                timeData = Number(gId('time').value) || 5000;
+
+                init(oText.value);
+            }
+
+            ev.preventDefault();
+        };
+
+        //动画
+        function animation() {
+            ctx.clearRect(0,0,oCan.width,oCan.height);
+
+            var len = arr.length,
+                i,
+                thisTime = new Date().getTime();
+
+            for(i=0; i<len; i++){
+
+                if(derection){
+                    arr[i].draw(size, 'black');
+                    arr[i].moveName();
+                    if(thisTime-lastDare >= timeData) derection = false;
+
+                }else {
+                    arr[i].draw(size, arr[i].color);
+                    arr[i].moveRandom();
+                }
+
+            }
+
+            timer = window.requestAnimationFrame(animation);
+        }
+
+        //取出像素
+        function getImgArray(oImg, density) {
+            var h, w,
+                width = oImg.width,
+                height = oImg.height,
+                data = oImg.data,
+                i = 0,
+                arr = [],
+                num = 0;
+
+            density = density || 1;
+
+            for ( h = 0; h < height; h += density){
+                for ( w = 0; w < width; w += density){
+                    num++;
+                    i = 4*(h*width+w);
+                    if(data[i+3] >= 128){
+                        arr.push(new Dot(w, h));
+                    }
+                }
+            }
+
+            return arr;
+        }
+
+        //取随机数
+        function randomNum(max, min) {
+            min = min || 0;
+            return ~~(Math.random()*(max-min+1)+min);
+        }
+
+        //取随机色
+        function randomColor() {
+            var r = ~~(Math.random()*255),
+                g = ~~(Math.random()*255),
+                b = ~~(Math.random()*255);
+
+            return "rgba("+r+","+g+","+b+",255)";
+        }
+
+        function drawArc(x, y, r, color, arc) {
+            arc = arc || 360;
+            color = color || "green";
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, arc*Math.PI/180, true);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.restore();
+        }
+
+    }();
+
+
+</script>
+</body>
+</html>

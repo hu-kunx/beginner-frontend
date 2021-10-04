@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>粒子乱闪</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        #can {
+            display: block;
+            background-color: rgba(0,0,0,1);
+        }
+    </style>
+</head>
+<body>
+<canvas id="can" width="400" height="400">
+    <span>不支持</span>
+</canvas>
+<script>
+    var doc = document;
+    var oCan = doc.getElementById('can'),
+        ctx = oCan.getContext('2d');
+
+    var W = oCan.width = doc.documentElement.clientWidth,
+        H = oCan.height = doc.documentElement.clientHeight;
+
+    window.onresize = function (ev) {
+       oCan.width = doc.documentElement.clientWidth;
+       oCan.height = doc.documentElement.clientHeight;
+    };
+
+    var content = [];
+
+    init();
+
+    function init() {
+        content.length = 0;
+        var i = 0;
+        for (;i<40;i++ ){
+            content.push(new Arc());
+        }
+        draw();
+    }
+
+    function Arc() {
+        this.width = Math.random()*oCan.width>>0;
+        this.height = Math.random()*oCan.height>>0;
+        this.speedX = Math.floor(Math.random()*20)-10.5;
+        this.speedY = Math.floor(Math.random()*20)-10.5;
+        this.R = (Math.random()*20+20)>>0;
+        var r = Math.random()*255>>0,
+            g = Math.random()*255>>0,
+            b = Math.random()*255>>0;
+        this.color = "rgba("+r+","+g+","+b+",1)";
+    }
+
+    function draw() {
+            var len = content.length,
+                i = 0;
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = "rgba(0,0,0,.5)";
+            ctx.fillRect(0,0,oCan.width,oCan.height);
+            ctx.globalCompositeOperation = 'lighter';
+
+            for (; i < len; i++){
+                var cot = content[i];
+                var color = ctx.createRadialGradient(cot.width, cot.height, cot.R/12, cot.width, cot.height, cot.R);
+                color.addColorStop(0,'#fff');
+                color.addColorStop(1, cot.color);
+                ctx.beginPath();
+                ctx.arc(cot.width, cot.height, cot.R, 0, Math.PI*2, true);
+                ctx.fillStyle = color;
+                ctx.fill();
+
+                cot.width += cot.speedX;
+                cot.height += cot.speedY;
+                if(cot.width > oCan.width) cot.width = 0;
+                if(cot.width < 0) cot.width = W;
+                if(cot.height > oCan.height) cot.height = 0;
+                if(cot.height < 0) cot.height = H;
+            }
+
+            window.requestAnimationFrame(draw);
+        }
+
+</script>
+</body>
+</html>

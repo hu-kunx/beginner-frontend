@@ -1,0 +1,24 @@
+@charset "utf-8";
+@mixin flow($dir:row) {
+  display: flex;
+  flex-direction: $dir;
+}
+
+@mixin dir-left($px:0){
+  margin-left: auto;
+  margin-right: $px;
+}
+
+@mixin dir-right($px:0){
+  margin-right: auto;
+  margin-left: $px;
+}
+@mixin box-shadow($num:8px){
+  box-shadow: 0 3px $num #ccc;
+}
+
+%ul-none {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

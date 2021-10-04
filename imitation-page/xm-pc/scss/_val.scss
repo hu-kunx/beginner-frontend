@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+//header
+$header-font-size: 12px;
+
+//小米色
+$m-color:#ff6700;
+
+//头部背景色
+$header-background-color: #333;
+
+//头部字体色
+$header-color: #aaa;
+
+//容器宽度
+$container-min-width:1226px;
+//头部行高
+$header-line-height:35px;
+//购物车的宽度
+$cart-content-width: 320px;
+//购物车弹出框的高
+$cart-height: 100px;
+
+//navbar
+$navbar-height: 100px;
+//导航栏的高
+$navbar-container-height: 50px;
+//5分之一的宽度
+$row-m5:($container-min-width - 30px)/5;
+//搜索宽度
+$search-width: 300px;
+//导航的二级菜单高
+$nav-menu-height: 230px;
+
+
+//baner
+//轮播导航的背景色
+$well-nav-background-color: #333;
+
+$well-nav-row: ($container-min-width - $row-m5 - 40px) /4;
+
+//z-index
+//导航菜单
+$nav-menu-index:9999999;
+//搜索联想
+$search-index: 9999999;
+//二级子导航菜单
+$well-nav-sub-index:1;
+$well-pic-index:1;
+//左右按钮
+$btn-prev-index:40;
+//5个小点
+$btn-itm-index:1;
+$banner-pic-index :1;
+//轮播导航
+$well-nav-index:10000;
+
+

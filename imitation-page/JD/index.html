@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="关键字"/>
+    <meta name="description" content="页面描述"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--ie-->
+    <meta name="renderer" content="webkit">
+    <!--360-->
+    <meta name ="viewport" content ="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <!--关键-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--百度转码-->
+    <meta name="robots" content="index,follow">
+    <!--搜索引擎-->
+    <meta name="apple-mobile-web-app-title" content="标题"> <!-- 添加到主屏后的标题（iOS 6 新增） -->
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- 是否启用 WebApp 全屏模式 -->
+    <meta name="format-detection" content="telephone=no" /> <!-- 禁止数字识自动别为电话号码 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <title>仿写JD - 移动网页</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+        !function (max) {
+
+            var docEl = document.documentElement,
+                dpr;
+            //获取 dpr 设置缩放
+            function getDpr() {
+                dpr = window.devicePixelRatio || 1;
+                if(dpr >= 3){
+                    dpr = 3;
+                }else
+                if(dpr >= 2) {
+                    dpr = 2;
+                }else {
+                    dpr = 1;
+                }
+                document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + 1/dpr + ', maximum-scale=' + 1/dpr + ', minimum-scale=' + 1/dpr + ', user-scalable=no');
+            }
+            //设置 body 字体大小
+            function setBodyFontSize() {
+                if(document.body) {
+                    document.body.style.fontSize = 12*dpr+'px';
+                }else {
+                    window.addEventListener('DOMContentLoaded',setBodyFontSize,false);
+                }
+            }
+            //设置 1rem 字体大小
+            function setRem() {
+                var width = docEl.clientWidth;
+
+                if (width > max){
+                    width = max;
+                }
+
+                var rem = (width)/10;
+
+                docEl.style.fontSize = rem+'px';
+                docEl.setAttribute('data-dpr',dpr);
+            }
+            function init() {
+                getDpr();
+                setBodyFontSize();
+                setRem();
+            }
+            //启动
+            init();
+
+            window.addEventListener('resize', init);
+            window.addEventListener('pageshow', function (e) {
+                if (e.persisted) {
+                    init();
+                }
+            });
+
+        }(750)
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <!--top-->
+    <header class="topbar">
+        <div class="search">
+            <span class="search-logo"></span>
+            <span class="ico-search"></span>
+            <input type="text" class="search-input" placeholder="平板电脑">
+        </div>
+        <a class="login" href="javascript:vido(0)">登陆</a>
+    </header>
+    <!--banner-->
+    <section class="banner">
+        <div class="banner-pic">
+            <a href="javascript:"><img src="images/A80.webp" alt=""></a>
+            <a href="javascript:"><img src="images/A4.jpg" alt=""></a>
+            <a href="javascript:"><img src="images/A28.webp" alt=""></a>
+            <a href="javascript:"><img src="images/A31.webp" alt=""></a>
+            <a href="javascript:"><img src="images/A58.jpg" alt=""></a>
+            <a href="javascript:"><img src="images/A59.webp" alt=""></a>
+            <a href="javascript:"><img src="images/A63.webp" alt=""></a>
+            <a href="javascript:"><img src="images/A79.webp" alt=""></a>
+            <a href="javascript:"><img src="images/A80.webp" alt=""></a>
+            <a href="javascript:"><img src="images/A4.jpg" alt=""></a>
+        </div>
+        <span class="btn-list">
+            <span class="btn-itm on"></span>
+            <span class="btn-itm"></span>
+            <span class="btn-itm"></span>
+            <span class="btn-itm"></span>
+            <span class="btn-itm"></span>
+            <span class="btn-itm"></span>
+            <span class="btn-itm"></span>
+            <span class="btn-itm"></span>
+        </span>
+    </section>
+    <div class="adv">
+        <img src="images/A65.gif" alt="">
+    </div>
+    <!--nav-->
+    <nav class="jd-nav">
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A56.png" alt="">
+            <span>京东超市</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A39.webp" alt="">
+            <span>全球购</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A88.png" alt="">
+            <span>京东服饰</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A109.png" alt="">
+            <span>京东生鲜</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A89.png" alt="">
+            <span>京东到家</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A1.png" alt="">
+            <span>充值缴费</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A67.png" alt="">
+            <span>领京豆</span>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A85.png" alt="">
+            <span>领券</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A86.png" alt="">
+            <span>赚钱</span>
+        </a>
+        <a class="nav-item" href="javascript:vido(0);">
+            <img src="images/A87.png" alt="">
+            <span>物流查询</span>
+        </a>
+    </nav>
+    <!--每日福利-->
+    <div class="newday">
+        <a href="javascript:vido(0);">
+            <img src="images/A22.jpg" alt="">
+        </a>
+    </div>
+    <!--京东快报-->
+    <div class="jd-newspaper">
+        <img src="images/A127.png" class="newspaper">
+        <span class="hot">热</span>
+        <div class="newspaper-content">
+            <ul>
+                <li><a href="">假如在1万英尺高空玩手机...</a></li>
+            </ul>
+        </div>
+        <a class="newspaper-more" href="javascript:vido(0);">更多</>
+    </div>
+    <!--秒杀-->
+    <section class="jd-seckill">
+        <header class="seckill-header">
+            <span class="seckill-pic">京东秒杀</span>
+            <div class="seckill-tiem js-time">
+                <strong class="seckill-session">22点场</strong>
+                <span class="time-hour">00</span>
+                <span>:</span>
+                <span class="time-minute">24</span>
+                <span>:</span>
+                <span class="time-second">23</span>
+            </div>
+            <span class="seckill-take">京东轮番秒</span>
+        </header>
+        <div class="seckill-content">
+            <div class="seckill-banner">
+                <ul>
+                    <li>
+                        <img src="images/A41.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                    <li>
+                        <img src="images/A42.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                    <li>
+                        <img src="images/A39.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                    <li>
+                        <img src="images/A12.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                    <li>
+                        <img src="images/A9.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                    <li>
+                        <img src="images/A52.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                    <li>
+                        <img src="images/A57.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                    <li>
+                        <img src="images/A69.webp" alt="">
+                        <span class="new-price">¥3100</span>
+                        <span class="lod-price">¥3400</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">美食城</span>
+                            <span class="item-intro">低至五折</span>
+                        </div>
+                        <img src="images/A76.webp" alt="">
+                    </a>
+                </div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">电脑办公</span>
+                            <span class="item-intro">下单立减1000</span>
+                        </div>
+                        <img src="images/A12.webp" alt="">
+                    </a>
+                </div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">鞋靴箱包</span>
+                            <span class="item-intro">低至五折</span>
+                        </div>
+                        <img src="images/A16.webp" alt="">
+                    </a>
+                </div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">小家电馆</span>
+                            <span class="item-intro">满减狂欢</span>
+                        </div>
+                        <img src="images/A52.webp" alt="">
+                    </a>
+                </div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">京东生鲜</span>
+                            <span class="item-intro">领券149减20</span>
+                        </div>
+                        <img src="images/A49.webp" alt="">
+                    </a>
+                </div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">汽车用品</span>
+                            <span class="item-intro">春节不打烊</span>
+                        </div>
+                        <img src="images/A27.webp" alt="">
+                    </a>
+                </div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">京东图书</span>
+                            <span class="item-intro">每满160减60</span>
+                        </div>
+                        <img src="images/A32.webp" alt="">
+                    </a>
+                </div>
+                <div class="row-four">
+                    <a href="javascript:vido(0);">
+                        <div class="item-haeder">
+                            <span class="item-title">中外名酒</span>
+                            <span class="item-intro">满199减100</span>
+                        </div>
+                        <img src="images/A91.webp" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--爱生活-->
+    <div class="isolation">
+        <img src="images/A47.jpg" alt="">
+    </div>
+    <section class="jd-col1">
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">玩3C</span>
+                    <span class="item-intro">iPhone X 12期免息券</span>
+                </div>
+                <img src="images/A43.webp" alt="">
+                <img src="images/A44.webp" alt="">
+            </a>
+        </div>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">京东家电</span>
+                    <span class="item-intro">春节也送货 领券送1500元</span>
+                </div>
+                <img src="images/A9.webp" alt="">
+                <img src="images/A58.jpg" alt="">
+            </a>
+        </div>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">京东超市</span>
+                    <span class="item-intro">好货部分满99-50</span>
+                </div>
+                <img src="images/A15.webp" alt="">
+                <img src="images/A14.webp" alt="">
+            </a>
+        </div>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">爱家</span>
+                    <span class="item-intro">爱居日用 部分满199-100</span>
+                </div>
+                <img src="images/A2.webp" alt="">
+                <img src="images/A29.webp" alt="">
+            </a>
+        </div>
+        <!--4 row-->
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">爱宝宝</span>
+                    <span class="item-intro">爆款低至五折</span>
+                </div>
+                <img src="images/A50.jpg" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">爱美丽</span>
+                    <span class="item-intro">满199减100</span>
+                </div>
+                <img src="images/A25.jpg" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">爱吃</span>
+                    <span class="item-intro">满199减120</span>
+                </div>
+                <img src="images/A45.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">爱穿搭</span>
+                    <span class="item-intro">新年穿新衣</span>
+                </div>
+                <img src="images/A18.webp" alt="">
+            </a>
+        </div>
+    </section>
+    <div class="isolation">
+        <img src="images/A53.jpg" alt="">
+    </div>
+    <!--逛商场-->
+    <section class="jd-col2">
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">手机数码</span>
+                    <span class="item-intro">小米 MlX2</span>
+                </div>
+                <img src="images/A41.webp" alt="">
+            </a>
+        </div>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">男装馆</span>
+                    <span class="item-intro">限量潮品2折</span>
+                </div>
+                <img src="images/A37.webp" alt="">
+            </a>
+        </div>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">大家电馆</span>
+                    <span class="item-intro">满千减百</span>
+                </div>
+                <img src="images/A32.webp" alt="">
+            </a>
+        </div>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">个护清洁</span>
+                    <span class="item-intro">满199-100</span>
+                </div>
+                <img src="images/A74.webp" alt="">
+            </a>
+        </div>
+        <!--4 row-->
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">美食城</span>
+                    <span class="item-intro">低至五折</span>
+                </div>
+                <img src="images/A76.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">电脑办公</span>
+                    <span class="item-intro">下单立减1000</span>
+                </div>
+                <img src="images/A12.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">鞋靴箱包</span>
+                    <span class="item-intro">低至五折</span>
+                </div>
+                <img src="images/A16.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">小家电馆</span>
+                    <span class="item-intro">满减狂欢</span>
+                </div>
+                <img src="images/A52.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">京东生鲜</span>
+                    <span class="item-intro">领券149减20</span>
+                </div>
+                <img src="images/A49.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">汽车用品</span>
+                    <span class="item-intro">春节不打烊</span>
+                </div>
+                <img src="images/A27.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">京东图书</span>
+                    <span class="item-intro">每满160减60</span>
+                </div>
+                <img src="images/A32.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">中外名酒</span>
+                    <span class="item-intro">满199减100</span>
+                </div>
+                <img src="images/A91.webp" alt="">
+            </a>
+        </div>
+    </section>
+    <div class="isolation">
+        <img src="images/A64.jpg" alt="">
+    </div>
+    <!--特色推荐-->
+    <section>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">白条商城</span>
+                    <span class="item-intro">iPhone X 12期免息券</span>
+                </div>
+                <img src="images/A29.webp" alt="">
+                <img src="images/A33.webp" alt="">
+            </a>
+        </div>
+        <!--4 row-->
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">京东众筹</span>
+                    <span class="item-intro">抽1000元E卡</span>
+                </div>
+                <img src="images/A27.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">京东旅行</span>
+                    <span class="item-intro">庙会直降140</span>
+                </div>
+                <img src="images/A46.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">智能生活</span>
+                    <span class="item-intro">酷玩黑科技</span>
+                </div>
+                <img src="images/A11.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">陪伴宝宝</span>
+                    <span class="item-intro">新春1元买</span>
+                </div>
+                <img src="images/A46.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">特产·扶贫</span>
+                    <span class="item-intro">地道重庆味</span>
+                </div>
+                <img src="images/A17.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">爱车生活</span>
+                    <span class="item-intro">春节不打烊</span>
+                </div>
+                <img src="images/A32.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">大药房</span>
+                    <span class="item-intro">过年送礼优选</span>
+                </div>
+                <img src="images/A66.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">设计师</span>
+                    <span class="item-intro">潮流设计精选</span>
+                </div>
+                <img src="images/A19.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">京东房产</span>
+                    <span class="item-intro">特惠房源</span>
+                </div>
+                <img src="images/A13.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">生活娱乐</span>
+                    <span class="item-intro">领券加油</span>
+                </div>
+                <img src="images/A21.webp" alt="">
+            </a>
+        </div>
+    </section>
+    <div class="isolation">
+        <img src="images/A93.jpg" alt="">
+    </div>
+    <!--农家小院-->
+    <section class="jd-col3">
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">—— 潮流运动 ——</span>
+                    <span class="item-intro">你的时尚运动生活</span>
+                </div>
+                <img src="images/A11.webp" alt="">
+                <img src="images/A10.webp" alt="">
+            </a>
+        </div>
+        <div class="row-two">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">—— 爱车达人 ——</span>
+                    <span class="item-intro">让你的爱车更省心</span>
+                </div>
+                <img src="images/A27.webp" alt="">
+                <img src="images/A57.webp" alt="">
+            </a>
+        </div>
+        <!--4 row-->
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">欧美范儿</span>
+                    <span class="item-intro">善用经典款式</span>
+                </div>
+                <img src="images/A77.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">球场王者</span>
+                    <span class="item-intro">球场必备</span>
+                </div>
+                <img src="images/A83.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">机械达人</span>
+                    <span class="item-intro">品味男人标志</span>
+                </div>
+                <img src="images/A69.webp" alt="">
+            </a>
+        </div>
+        <div class="row-four">
+            <a href="javascript:vido(0);">
+                <div class="item-haeder">
+                    <span class="item-title">聚会穿搭</span>
+                    <span class="item-intro">年末聚会</span>
+                </div>
+                <img src="images/A110.webp" alt="">
+            </a>
+        </div>
+    </section>
+    <div class="login-link">
+        <div>
+            <span>^ 为您推荐</span>
+        </div>
+        <a href="javascript:vido(0);">
+            登陆账号,查看专属推荐商品>
+        </a>
+    </div>
+    <section class="jd-shop">
+        <div class="shop">
+            <img src="images/A55.webp" alt="">
+            <p class="shop-explain">
+                博视乐（Boshile） 双目头戴式带LED灯放大镜 镜片可调 钟表仪器修理
+            </p>
+            <div class="shop-price">
+                <span>¥65.00</span>
+                <span class="shop-label"></span>
+            </div>
+            <div class="shop-info">
+                <span>好评率99%</span>
+                <a href="">看相似</a>
+            </div>
+        </div>
+        <div class="shop">
+            <img src="images/A90.jpg" alt="">
+            <p class="shop-explain">
+                百草味 坚果零食干果 内含开果器 夏威夷果奶油味200g/袋
+            </p>
+            <div class="shop-price">
+                <span>¥65.00</span>
+                <span class="shop-label"></span>
+            </div>
+            <div class="shop-info">
+                <span>好评率99%</span>
+                <a href="">看相似</a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="loginbar">
+            <a class="login" href="javascript:vido(0);">登陆</a>
+            <span>|</span>
+            <a class="register" href="javascript:vido(0);">注册</a>
+            <span>|</span>
+            <a class="tickling" href="javascript:vido(0);">反馈</a>
+            <span>|</span>
+            <a class="gotop" href="javascript:vido(0);">回到顶部</a>
+        </div>
+        <div class="facility">
+            <a href="javascript:vido(0);">客户端</a>
+            <a class="on" href="javascript:vido(0);">触屏版</a>
+            <a href="javascript:vido(0);">电脑版</a>
+        </div>
+    </footer>
+    <section class="paging">
+        <ul>
+            <li>
+                <a href="javascript:vido(0);">
+                    <img class="home" src="images/A101.png" />
+                </a>
+            </li>
+            <li>
+                <a href="javascript:vido(0);">
+                    <img class="tag" src="images/A102.png">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:vido(0);">
+                    <img class="find" src="images/A24.png">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:vido(0);">
+                <img class="shopCart"  src="images/A103.png"/>
+            </a>
+            </li>
+            <li>
+                <a href="javascript:vido(0);">
+                    <img class="me" src="images/A104.png">
+                </a>
+            </li>
+        </ul>
+</section>
+</div>
+<script src="js/index.js"></script>
+</body>
+</html>

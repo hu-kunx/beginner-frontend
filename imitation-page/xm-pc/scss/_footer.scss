@@ -1,0 +1,66 @@
+@charset "utf-8";
+
+footer {
+  margin-top: 50px;
+  background-color: white;
+  //头部
+  .header {
+      @include flow;
+      padding: 20px 0;
+      border-bottom: 1px solid #ccc;
+    a{
+      display: block;
+      text-align: center;
+      width: $row-m5;
+      border-right: 1px solid #ccc;
+    }
+    a:last-child {
+      border-right: 0;
+    }
+  }
+  //表格
+  .content {
+    @include flow;
+    .tab {
+      font-size: 15px;
+      @include flow;
+    }
+    dl {
+      margin-left: 45px;
+    }
+    dt {
+      margin-left: 40px;
+    }
+    dd {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #999;
+    }
+  }
+  //客服电话
+  .link {
+    @include flow(column);
+    align-items: center;
+    width: $row-m5;
+    margin-left: auto;
+    h4 {
+      margin: 15px;
+      font-size: 20px;
+      color: $m-color;
+    }
+    span{
+      font-size: 12px;
+      margin-top: 3px;
+    }
+    a{
+      margin-top: 10px;
+      padding: 5px 15px;
+      font-size: 14px;
+      border-radius: 2px;
+      border: 1px solid $m-color;
+    }
+  }
+
+
+
+}

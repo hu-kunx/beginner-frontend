@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>将图片的白色背景转换为透明</title>
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .wrap {
+            margin: 20px auto;
+            max-width: 980px;
+            min-width: 400px;
+            text-align: center;
+        }
+        .readImg {
+            margin: 20px auto;
+            width: 481px;
+            height: 271px;
+            border: 1px solid blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .readImg img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .marBot-10 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p>会将图片上所有的白色变成透明</p>
+    <p>图片会等比缩放,默认大小为1920*1080缩小4倍即 480*270</p>
+    <p>
+        缺点是会将所有的白色变成透明如果,你的图片需要白色,那么就行不通了,
+        默认会把 245以上的都替换为透明.
+    </p>
+    <div class="readImg">
+        可以拖动图片到此次
+    </div>
+    <form action="">
+        <input class="marBot-10" id="file" type="file" name="file">
+        <label>
+            <span>预览:</span>
+            <input class="marBot-10" id="read" type="button" value="read" accept="image/*">
+        </label>
+        <input id="submit" type="submit" value="转换" style="margin-left: 20px;color: red">
+        <br/>
+        <label>
+            <span>宽度:</span>
+            <input id="width" type="number" value="480" max="1980" min="10" required>
+        </label>
+        <label>
+            <span>高度:</span>
+            <input class="marBot-10" id="height" type="number" value="270" max="1080" min="10" required>
+        </label>
+        <label>
+            <span>透明度:</span>
+            <input id="opacity" type="number" value="245" max="255" min="230" required>
+        </label>
+        <br/>
+        <label>
+            <span>文件名--默认为时间戳:</span>
+            <input id="fileName" type="text" placeholder="文件名">
+        </label>
+        <label>
+            <span>图片转换后格式:</span>
+            <input id="format" type="text" placeholder="image/png" >
+            <p>
+                默认格式为 image/png ,
+                chrome 浏览器支持 webp
+            </p>
+        </label>
+    </form>
+</div>
+<script>
+    !function () {
+        var read = getId('read'),    //预览图片按钮
+            file = getId('file'),    //文件提交
+            submit = getId('submit'), //转换按钮
+            readBox = document.getElementsByClassName('readImg')[0],
+            UserSetfileName = '', //文件名
+            dragFile = null,    //拖拽获取的文件对象
+            opacity = 245;
+
+
+        //创建一个隐藏的 canvas
+        var oCan = createCanvas(),
+            ctx = oCan.getContext('2d');
+
+        //预览
+        read.onclick = function () {
+            if(file.files[0]){
+                var url = URL.createObjectURL(file.files[0]);
+                readBox.innerHTML = '<img src="'+url+'" />';
+            }
+        };
+
+        //转换
+        submit.onclick = function (ev) {
+             ev = ev || window.event;
+             ev.preventDefault();
+
+             var width = getId('width').value || 480,
+                 height = getId('height').value || 480,
+                 oImg,
+                 format = getId('format').value || 'image/png';
+
+             if(format.indexOf('image') === -1 && format[0] !== 'i'){
+                 alert('格式有误!');
+                 return;
+             }else {
+                 console.log(format.length)
+             }
+
+            if(file.files[0] || dragFile !== null){
+
+                if(file.files[0]){
+                    oImg = createImg(file.files[0]);
+
+                }else {
+                    oImg = createImg(dragFile);
+                }
+
+            }else {
+                alert('请添加图片!');
+                return;
+            }
+
+            //两个变量 外部函数要引用
+            UserSetfileName = getId('fileName').value || new Date().getTime();
+            opacity = getId('opacity').value || 245;
+
+            oImg.onload = function () {
+                //图片加载后回调    //获取图片原始大小
+                getImgAttr(getImginitWidth(this));
+            };
+
+            function getImgAttr(imgAttr) {
+                //图片缩放
+                var arr = imgScale(imgAttr[0],imgAttr[1]);
+                //canvas 的宽高为 图片的高
+                oCan.width = arr[0];
+                oCan.height = arr[1];
+
+                //绘制 图片
+                ctx.clearRect(0,0, oCan.width, oCan.height);
+                drawImg(oImg, 0, 0, arr[0], arr[1]);
+
+                //获取像素
+                var imgData = ctx.getImageData(0,0, oCan.width, oCan.height);
+
+                //处理像素
+                var putImgData = setOpaclty(imgData);
+
+                //绘制到 canvas 上
+                ctx.putImageData(putImgData, 0, 0);
+
+                //浏览器不允许 a 标签访问 base64
+                // 要转换格式通知浏览器下载
+                var imgUrl = oCan.toDataURL(format, 1).replace(format, "image/octet-stream");
+
+                alert('转换结束,即将下载!');
+
+               var fileName = '.' + format.slice(6,format.length);
+
+                downImg(imgUrl, fileName);
+
+                //重置拖拽文件对象变量
+                dragFile = null;
+
+            }
+
+            ev.preventDefault();
+        };
+
+        //拖拽
+
+        //进入目标
+        readBox.ondragenter = function (ev){
+            ev = ev || window.event;
+
+            ev.preventDefault();
+            this.style.border = '1px dashed green';
+        };
+
+        //在目标中移动
+        readBox.ondragover = function (ev) {
+            ev = ev || window.event;
+
+            this.style.backgroundColor = '#eee';
+            ev.preventDefault();
+            //不然 ondrop 不会触发
+        };
+
+        //离开目标元素
+        readBox.ondragleave = function (ev) {
+            ev = ev || window.event;
+
+            this.style.border = '1px solid blue';
+            this.style.backgroundColor = '';
+
+        };
+
+        //鼠标释放
+        readBox.ondrop = function (ev) {
+            ev = ev || window.event;
+
+            var data = ev.dataTransfer;
+
+            dragFile = data.files[0];
+
+            if (dragFile.type.indexOf('image') !== -1) {
+
+                var url = URL.createObjectURL(dragFile);
+
+                this.innerHTML = '<img src="'+url+'" />';
+
+            }
+
+            this.style.border = '1px solid blue';
+            this.style.backgroundColor = '';
+
+            ev.preventDefault();
+        };
+
+            //下载图片
+        function downImg(url, name) {
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = UserSetfileName+name;
+            a.click();
+        }
+
+        //创造图片
+        function createImg(file) {
+            var img = document.createElement('img');
+
+            img.src = URL.createObjectURL(file);
+
+            return img;
+        }
+
+        //创造 canvas
+        function createCanvas() {
+            var oCan = document.createElement('canvas');
+            oCan.width = 480;
+            oCan.height = 270;
+
+            return oCan;
+        }
+
+        //计算图片 位于 canvas 中心时的 x,y
+        function imgCanvasCenter(w, h, canvas) {
+            canvas = canvas || oCan;
+            return [(canvas.width-w)/2,(canvas.height-h)/2];
+        }
+
+        //图片同比缩放
+        function imgScale(w, h, can) {
+            can = can || oCan;
+
+            if(w > can.width){
+                return [ w * (can.width/w), ~~(h * (can.width/w))];
+            }
+            if(h > can.height){
+                return [ w * (can.height/h), ~~(h * (can.height/h))];
+            }
+            return [w, h];
+        }
+
+        //获取图片原始宽度和高度
+        function getImginitWidth(Img) {
+            if(Img.naturalWidth){
+                return [Img.naturalWidth, Img.naturalHeight];
+            }else {
+                var newImg = new Image();
+                newImg.src = Img.src;
+                newImg.onload = function (ev) {
+                    return [this.clientWidth, this.clientHeight];
+                }
+            }
+        }
+
+        //转换, 将白色转换为透明
+        function setOpaclty(obj) {
+            var h,w,i,
+                arr = [],
+                height = obj.height,
+                width = obj.width,
+                data = obj.data;
+            console.log(opacity)
+
+            for ( h = 0; h < height; h ++){
+                for ( w = 0; w < width; w ++){
+                    i = 4*(h*width+w);
+                    if(data[i+3] >= 150 ){
+                        if(data[i] >= opacity && data[i+1] >= opacity && data[i+2] >= opacity ){
+                            data[i+3] = 0;
+                        }
+                    }
+                }
+            }
+            return obj;
+        }
+
+        //绘制图片
+        function drawImg(Img, X, Y , w, h) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.drawImage(Img, X, Y , w, h);
+            ctx.restore();
+        }
+
+        //选择 id
+        function getId(str) {
+            return document.getElementById(str);
+        }
+
+    }();
+</script>
+</body>
+</html>

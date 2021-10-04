@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+.m-header {
+  color: $header-color;
+  background-color: $header-background-color;
+  .container {
+    @include flow;
+    line-height: $header-line-height;
+    font-size: $header-font-size;
+    span {
+      color: #666;
+    }
+  }
+  .header-nav {
+    @include dir-right;
+
+  }
+  .header-right {
+    @include dir-left;
+  }
+  a {
+    margin: 0 5px;
+    color: $header-color;
+    &:hover {
+      color: white;
+    }
+  }
+  //购物车
+  .shoppingCart {
+    position: relative;
+    display: inline-block;
+    padding: 0 30px;
+    background-color: #434343;
+    span {
+      color: $header-color;
+    }
+    &:hover {
+      background-color: white;
+      span {
+        color: $m-color;
+      }
+      .cart-content {
+        height: $cart-height;
+        background-color: white;
+      }
+    }
+    //购物车内容
+    .cart-content {
+      position: absolute;
+      z-index: 99003232;
+      right: 0;
+      top: $header-line-height;
+      width: 320px;
+      height: 0;
+      line-height: $cart-height;
+      color: #666;
+      text-align: center;
+      transition: height .5s;
+      overflow: hidden;
+      @include box-shadow;
+      background-color: white;
+    }
+  }
+}

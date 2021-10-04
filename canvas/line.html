@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <title>canvas</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div"></div>
+    <script>
+      /*      可以不要参数直接用
+       *
+       *   参数列表
+       *
+       *   ID          canvas 的容器      默认 body 最后
+       *
+       *   num         小点的数量          默认 120
+       *
+       *   range       连线的范围半径       默认100
+       *
+       *   background  canvas 的背景色     默认为 canvas 本来的颜色
+       *
+       *   nodesColor  小点的颜色          默认为随机色
+       *
+       *   lineColor   线条的颜色          默认为  #ccc
+       *
+       *
+       * */
+
+      var opt = {
+        ID: "div",
+        num: 120,
+        range: 120,
+        // background : "black",
+        // nodesColor : "#aaa",
+        lineColor: "#ccc"
+      };
+
+      canvasLine(opt);
+
+      function canvasLine(o) {
+        var docEL = document.documentElement,
+          timer,
+          W,
+          H,
+          nodes = [],
+          oCan = null,
+          ctx = null;
+
+        o = o || {};
+
+        //可选参数
+        var background = o.background,
+          num = o.num || 120,
+          range = o.range || 100,
+          nodesColor = o.nodesColor,
+          lineColor = o.lineColor || "#ccc",
+          oBox = document.getElementById(o.ID) || document.body;
+
+        //初始化 canvas
+        !(function initCanvas() {
+          oCan = createCanvas();
+
+          if (background) {
+            oCan.style.cssText =
+              "background-color:" + background + ";display:block;";
+          }
+
+          oBox.appendChild(oCan);
+
+          ctx = oCan.getContext("2d");
+
+          document.body.style.overflow = "hidden";
+        })();
+
+        //画布大小
+        window.onresize = function(ev) {
+          W = oCan.width = docEL.clientWidth;
+          H = oCan.height = docEL.clientHeight;
+
+          clearTimeout(timer);
+
+          timer = setTimeout(function() {
+            nodes.length = 0;
+            init();
+          }, 1000 / 5);
+        };
+        window.onresize();
+
+        //每个小点的属性
+        function Node() {
+          this.x = ~~(Math.random() * W);
+          this.y = ~~(Math.random() * H);
+          this.r =
+            Math.random() >= 0.8
+              ? ~~(3 + Math.random() * 3)
+              : ~~(1 + Math.random() * 3);
+          this.vx = Number((Math.random() - 0.5).toFixed(3));
+          this.vy = Number((Math.random() - 0.5).toFixed(3));
+          this.color = randomColor();
+        }
+
+        //绘制
+        Node.prototype.draw = function() {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
+          ctx.fillStyle = nodesColor || this.color;
+          ctx.fill();
+          ctx.restore();
+        };
+
+        //鼠标事件
+        oCan.onmousemove = function(ev) {
+          ev = ev || window.event;
+          nodes[0].x = ev.offsetX || 0;
+          nodes[0].y = ev.offsetY || 0;
+        };
+
+        //初始小点数组
+        function init() {
+          var i = 0;
+          for (; i < num; i++) {
+            nodes.push(new Node());
+          }
+          nodes[0].r = 1;
+          nodes[0].vx = 0;
+          nodes[0].vy = 0;
+        }
+
+        //动画
+        !(function animation() {
+          var i = 0,
+            j,
+            len = nodes.length;
+
+          //清除画布
+          ctx.clearRect(0, 0, W, H);
+
+          //第一个点
+          for (; i < len; i++) {
+            //绘制
+            nodes[i].draw();
+
+            //第二个点
+            for (j = i + 1; j < len; j++) {
+              var nodeI = nodes[i];
+
+              //划线
+              if (isRange(nodeI.x, nodes[j].x, nodeI.y, nodes[j].y) <= range) {
+                drawLine(nodeI, nodes[j]);
+              }
+            }
+            //移动
+            nodeI.x += nodeI.vx;
+            nodeI.y += nodeI.vy;
+            //限制范围
+            if (nodeI.x <= 0 || nodeI.x >= W) {
+              nodeI.vx *= -1;
+            }
+            if (nodeI.y <= 0 || nodeI.y >= H) {
+              nodeI.vy *= -1;
+            }
+          }
+          window.requestAnimationFrame(animation);
+        })();
+
+        //创造 canvas
+        function createCanvas() {
+          oCan = document.createElement("canvas");
+
+          oCan.innerHTML = "<span>您的浏览器不支持 canvas </span>";
+          oCan.style.cssText = "position:fixed; top:0;left:0;z-index:-1;";
+
+          return oCan;
+        }
+
+        //随机 rgba 颜色
+        function randomColor() {
+          var r = Math.floor(Math.random() * 255),
+            g = Math.floor(Math.random() * 255),
+            b = Math.floor(Math.random() * 255),
+            a = Math.floor(Math.random() * 155 + 100);
+          return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+        }
+
+        //划线
+        function drawLine(form, to) {
+          ctx.save();
+          ctx.globalAlpha =
+            1 - isRange(form.x, to.x, form.y, to.y) / range + 0.3;
+          ctx.beginPath();
+          ctx.moveTo(form.x, form.y);
+          ctx.lineTo(to.x, to.y);
+          ctx.strokeStyle = lineColor;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        //计算两个点的距离
+        function isRange(X1, Y1, X2, Y2) {
+          return ~~Math.sqrt(Math.pow(X1 - Y1, 2) + Math.pow(X2 - Y2, 2));
+        }
+      }
+    </script>
+  </body>
+</html>

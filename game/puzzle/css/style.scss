@@ -1,0 +1,87 @@
+.wrap {
+  margin: 0 auto;
+  width: 600px;
+  .title {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    h1{
+      font-size: 80px;
+      margin: 30px 0 10px;
+    }
+    input{
+      padding: 8px 0;
+      width: 80px;
+      text-align: center;
+      color:white;
+      background-color: #538ca5;
+      border-radius: 5px;
+      outline: none;
+      transition: all .5s;
+    }
+    input:active {
+      transform: scale(.98);
+      color: red;
+      background: white;
+    }
+    span {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 2px 3px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      border-radius: 5px;
+      transition: all .4s;
+      cursor: pointer;
+    }
+    span:active {
+      color: red;
+      transform: scale(.95);
+    }
+    ul{
+      position: absolute;
+      margin: 0;padding: 0;
+      list-style-type: none;
+      right: 25px;
+      bottom: -5px;
+      li{
+        text-align: right;
+      }
+    }
+
+  }
+}
+.board{
+  box-sizing: border-box;
+  margin: 10px auto;
+  width: 610px;
+  height: 610px;
+  box-shadow: 0 0 0 5px #4d4d4d;
+  div{
+    box-sizing: border-box;
+    overflow: hidden;
+      div{
+        box-sizing: border-box;
+        float: left;
+        color: transparent;
+        font-size: 0;
+        box-shadow: 0 0 0 5px #4d4d4d inset;
+        background-color: bisque;
+      }
+  }
+}
+.bone {
+  box-shadow: 0 0 0 2px #4d4d4d!important;
+}
+.btwo {
+  box-shadow: 0 0 0 1px #4d4d4d!important;
+}
+.one {
+  box-shadow: 0 0 0 2px #4d4d4d inset!important;
+}
+.two {
+  box-shadow: 0 0 0 1px #4d4d4d inset!important;
+}
+.blue {
+  background-color: darkblue !important;
+}

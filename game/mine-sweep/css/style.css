@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+}
+#can {
+    display: block;
+    margin: 0 auto;
+}
+p{
+    margin: 0;
+}
+.title{
+    /*display: flex;*/
+    /*justify-content: center;*/
+    text-align: center;
+    margin: 20px 0 10px;
+}
+span{
+    margin: 0 10px;
+}
+.select{
+    outline: none;
+}
+strong{
+    color: red;
+}
+#time{
+    margin-top: 10px;
+    color: red;
+    font-size: 20px;
+    font-weight: 500;
+}
+/*9*9*/
